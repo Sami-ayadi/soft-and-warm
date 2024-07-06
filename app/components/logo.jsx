@@ -5,7 +5,7 @@ const Logo = () => {
       <header className="relative bg-gradient-to-r from-pink-300 to-pink-400 py-4 shadow-md">
         <div className="container mx-auto flex justify-between items-center px-4">
           <div>
-            <img src="/logoS.jpg" alt="Soft and Warm Logo" className="h-12" />
+            <img src="/logo1.png" alt="Soft and Warm Logo" className="h-12" />
           </div>
           <h1 className="text-4xl font-extrabold text-white tracking-wide hover:text-pink-500 transition duration-300">
             Soft and Warm
