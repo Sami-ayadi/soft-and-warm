@@ -1,11 +1,9 @@
-// components/Contact.js
 import React from 'react';
 import { FaPhone, FaInstagram, FaFacebook } from 'react-icons/fa';
 
 const Contact = () => {
   return (
     <div id="contact" className="flex flex-col items-center justify-center gap-4 p-4">
-      
       <div className="flex gap-4">
         <a href="tel:+21619930" className="text-gray-800 hover:text-blue-500 transition duration-300">
           <FaPhone className="text-2xl" />

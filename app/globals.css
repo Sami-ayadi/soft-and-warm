@@ -16,18 +16,35 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+/* globals.css */
+/* globals.css */
+/* globals.css */
+/* globals.css */
+/* globals.css */
+/* globals.css */
+/* globals.css */
+/* globals.css */
+/* globals.css */
+
+
+/* globals.css */
+/* globals.css */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 100%;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex-grow: 1;
+}
+
+footer {
+  margin-top: auto; /* Pushes the footer to the bottom */
 }
