@@ -39,6 +39,7 @@ export default function Home() {
     topPrice: false, // State for top price checkbox
     labsaKemla: false, // State for labsa kemla checkbox
   });
+  const [showNotification, setShowNotification] = useState(false);
 
   const handleImageClick = (image) => {
     setModalImage(image);
@@ -64,24 +65,16 @@ export default function Home() {
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Check if required fields are filled
-    if (!formData.name || !formData.phone || !formData.address || !formData.city) {
-      alert('Please fill out all required fields.');
-      return;
-    }
-  
-    // Prepare data to send
+
     const postData = {
       ...formData,
       size: selectedSize,
       color,
       type: formData.topPrice ? "Top Price - 20DT" : "Labsa Kemla - 54DT",
     };
-  
+
     try {
       const response = await fetch('/api/submit', {
         method: 'POST',
@@ -90,31 +83,29 @@ export default function Home() {
         },
         body: JSON.stringify(postData),
       });
-  
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+
+      if (response.ok) {
+        setShowNotification(true); // Show notification on success
+        setFormData({
+          name: '',
+          phone: '',
+          address: '',
+          city: '',
+          topPrice: false,
+          labsaKemla: false,
+        });
+        setSelectedSize('');
+      } else {
+        console.error('Failed to submit form');
       }
-  
-      const result = await response.json();
-      console.log('Response from server:', result);
-  
-      // Reset form data and selectedSize
-      setFormData({
-        name: '',
-        phone: '',
-        address: '',
-        city: '',
-        topPrice: false,
-        labsaKemla: false,
-      });
-      setSelectedSize('');
-      setColor('brown'); // Reset color to default after submission
     } catch (error) {
-      console.error('Error submitting data:', error);
-      // Handle error, show error message, etc.
+      console.error('Error submitting form:', error.message);
     }
   };
-  
+
+  const closeNotification = () => {
+    setShowNotification(false);
+  };
 
   return (
     <div>
@@ -259,6 +250,17 @@ export default function Home() {
               Submit
             </button>
           </form>
+          {/* Notification */}
+          {showNotification && (
+            <div className="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow">
+              <p>Commande réussie!</p>
+              <button className="ml-2 text-white" onClick={closeNotification}>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
