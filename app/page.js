@@ -1,4 +1,5 @@
 'use client';
+'use client';
 import { useState } from "react";
 import Image from "next/image";
 import { Container } from "@medusajs/ui";
@@ -36,8 +37,7 @@ export default function Home() {
     phone: '',
     address: '',
     city: '',
-    topPrice: false, // State for top price checkbox
-    labsaKemla: false, // State for labsa kemla checkbox
+    priceOption: '', // State for price options
   });
   const [showNotification, setShowNotification] = useState(false);
 
@@ -55,24 +55,27 @@ export default function Home() {
     setSelectedSize(size);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value, checked, type } = e.target;
-
-    if (type === 'checkbox') {
-      setFormData({ ...formData, [name]: checked });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!formData.priceOption) {
+      alert('Please select a price option.');
+      return;
+    }
+
     const postData = {
       ...formData,
       size: selectedSize,
       color,
-      type: formData.topPrice ? "Top Price - 20DT" : "Labsa Kemla - 54DT",
+      type: formData.priceOption,
     };
 
     try {
@@ -91,8 +94,7 @@ export default function Home() {
           phone: '',
           address: '',
           city: '',
-          topPrice: false,
-          labsaKemla: false,
+          priceOption: '',
         });
         setSelectedSize('');
       } else {
@@ -112,7 +114,7 @@ export default function Home() {
       <About />
       <div className="flex flex-col lg:flex-row w-full h-screen">
         {/* Left Side - Images */}
-        <div className="w-full lg:w-1/2 flex flex-col items-center gap-y-4 p-4 ">
+        <div className="w-full lg:w-1/2 flex flex-col items-center gap-y-4 p-4">
           {images[color].map((image) => (
             <Container key={image.id} className="relative aspect-square w-full overflow-hidden bg-ui-bg-subtle cursor-pointer" onClick={() => handleImageClick(image)}>
               <Image
@@ -166,7 +168,7 @@ export default function Home() {
                 style={{ backgroundColor: '#005148' }}
                 onClick={() => setColor('green')}
               />
-              
+
               {/* Size Selection Buttons */}
               {sizes.map((size) => (
                 <button
@@ -179,31 +181,46 @@ export default function Home() {
                 </button>
               ))}
             </div>
-            {/* Customization Checkboxes */}
+            {/* Customization Radio Buttons */}
             <div className="flex flex-col gap-y-2">
               <label className="flex items-center gap-x-2 cursor-pointer">
                 <input
-                  type="checkbox"
-                  name="topPrice"
+                  type="radio"
+                  name="priceOption"
                   value="Top Price - 20DT"
-                  checked={formData.topPrice}
+                  checked={formData.priceOption === "Top Price - 20DT"}
                   onChange={handleInputChange}
                   className="rounded border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                  required
                 />
-                <span className={`text-gray-800 font-bold ${formData.topPrice ? 'text-blue-600' : ''}`}>Top Price - 20DT</span>
+                <span className={`text-gray-800 font-bold ${formData.priceOption === "Top Price - 20DT" ? 'text-blue-600' : ''}`}>Top Price - 20DT</span>
               </label>
               <label className="flex items-center gap-x-2 cursor-pointer">
                 <input
-                  type="checkbox"
-                  name="labsaKemla"
+                  type="radio"
+                  name="priceOption"
                   value="Labsa Kemla - 54DT"
-                  checked={formData.labsaKemla}
+                  checked={formData.priceOption === "Labsa Kemla - 54DT"}
                   onChange={handleInputChange}
                   className="rounded border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                  required
                 />
-                <span className={`text-gray-800 font-bold ${formData.labsaKemla ? 'text-blue-600' : ''}`}>Labsa Kemla - 54DT</span>
+                <span className={`text-gray-800 font-bold ${formData.priceOption === "Labsa Kemla - 54DT" ? 'text-blue-600' : ''}`}>Labsa Kemla - 54DT</span>
+              </label>
+              <label className="flex items-center gap-x-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="priceOption"
+                  value="New Option - 30DT"
+                  checked={formData.priceOption === "New Option - 30DT"}
+                  onChange={handleInputChange}
+                  className="rounded border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                  required
+                />
+                <span className={`text-gray-800 font-bold ${formData.priceOption === "New Option - 30DT" ? 'text-blue-600' : ''}`}>New Option - 30DT</span>
               </label>
             </div>
+
             {/* Form Inputs */}
             <label className="flex flex-col">
               <span className="font-medium">Name</span>
@@ -213,6 +230,7 @@ export default function Home() {
                 value={formData.name}
                 onChange={handleInputChange}
                 className="p-2 border border-gray-300 rounded"
+                required
               />
             </label>
             <label className="flex flex-col">
@@ -223,6 +241,7 @@ export default function Home() {
                 value={formData.phone}
                 onChange={handleInputChange}
                 className="p-2 border border-gray-300 rounded"
+                required
               />
             </label>
             <label className="flex flex-col">
@@ -233,6 +252,7 @@ export default function Home() {
                 value={formData.address}
                 onChange={handleInputChange}
                 className="p-2 border border-gray-300 rounded"
+                required
               />
             </label>
             <label className="flex flex-col">
@@ -243,6 +263,7 @@ export default function Home() {
                 value={formData.city}
                 onChange={handleInputChange}
                 className="p-2 border border-gray-300 rounded"
+                required
               />
             </label>
             {/* Submit Button */}
