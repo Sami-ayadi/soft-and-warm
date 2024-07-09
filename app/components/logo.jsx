@@ -11,9 +11,9 @@ const Logo = () => {
             Soft and Warm
           </h1>
           <nav className="space-x-6">
-            <a href="#home" className="text-white text-lg hover:text-pink-600 transition duration-300 ">Shop</a>
+
             <a href="#about" className="text-white text-lg hover:text-pink-600 transition duration-300">About</a>
-            <a href="#contact" className="text-white text-lg hover:text-pink-600 transition duration-300">Contact</a>
+            <a href="https://www.instagram.com/softandwarm_/" className="text-white text-lg hover:text-pink-600 transition duration-300">Contact</a>
           </nav>
         </div>
       </header>

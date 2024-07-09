@@ -20,7 +20,7 @@ const About = () => {
           <div className="mt-6">
             <a
               className="inline-flex items-center px-5 py-3 text-sm font-medium text-pink-600 transition duration-300 bg-gray-100 rounded hover:bg-pink-400 hover:text-gray-100"
-              href="#contact"
+              href="https://www.instagram.com/softandwarm_/"
             >
               Get in Touch
             </a>
