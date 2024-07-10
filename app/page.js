@@ -268,8 +268,11 @@ export default function Home() {
         </div>
         
       </div>
-      <div>
-          <h2 className="text-2xl font-bold mb-4">Commandes</h2>
+      <div className="flex justify-center items-center">
+        <video controls className="h-auto max-h-80" width="100%">
+          <source src="/video.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
 
       
