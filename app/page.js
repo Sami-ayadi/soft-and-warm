@@ -112,9 +112,9 @@ export default function Home() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col">
       <About />
-      <div className="flex flex-col lg:flex-row w-full h-screen">
+      <div className="flex flex-col lg:flex-row w-full lg:h-screen">
         {/* Left Side - Images */}
         <div className="w-full lg:w-1/2 flex flex-col items-center gap-y-4 p-4">
           {images[color].map((image) => (
@@ -184,43 +184,24 @@ export default function Home() {
               ))}
             </div>
             {/* Customization Radio Buttons */}
-            <div className="flex flex-col gap-y-2">
-              <label className="flex items-center gap-x-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="priceOption"
-                  value="Top Price - 20DT"
-                  checked={formData.priceOption === "Top Price - 20DT"}
-                  onChange={handleInputChange}
-                  className="rounded border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                  required
-                />
-                <span className={`text-gray-800 font-bold ${formData.priceOption === "Top Price - 20DT" ? 'text-blue-600' : ''}`}>Top Price - 20DT</span>
-              </label>
-              <label className="flex items-center gap-x-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="priceOption"
-                  value="Labsa Kemla - 54DT"
-                  checked={formData.priceOption === "Labsa Kemla - 54DT"}
-                  onChange={handleInputChange}
-                  className="rounded border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                  required
-                />
-                <span className={`text-gray-800 font-bold ${formData.priceOption === "Labsa Kemla - 54DT" ? 'text-blue-600' : ''}`}>Labsa Kemla - 54DT</span>
-              </label>
-              <label className="flex items-center gap-x-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="priceOption"
-                  value="New Option - 30DT"
-                  checked={formData.priceOption === "New Option - 30DT"}
-                  onChange={handleInputChange}
-                  className="rounded border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                  required
-                />
-                <span className={`text-gray-800 font-bold ${formData.priceOption === "New Option - 30DT" ? 'text-blue-600' : ''}`}>New Option - 30DT</span>
-              </label>
+            <div className="flex flex-row">
+            
+              {['Crop T-Shirt + Short - 54DT', 'Top + Short - 54DT', 'Set  - 74DT'].map((option) => {
+              const [text, price] = option.split(' - ');
+              return (
+              <button
+                key={option}
+                type="button"
+                onClick={() => handleInputChange({ target: { name: 'priceOption', value: option } })}
+                className={`w-full text-left py-2 px-4  border border-gray-300 rounded ${
+                formData.priceOption === option ? 'bg-blue-400 text-white' : 'bg-white text-gray-800'
+                }`}
+              >
+                <span className="font-bold-500">{text}  </span>
+                <span className="font-bold text-pink-600">{price}</span>
+              </button>
+              );
+              })}
             </div>
 
             {/* Form Inputs */}
@@ -285,7 +266,13 @@ export default function Home() {
             </div>
           )}
         </div>
+        
       </div>
+      <div>
+          <h2 className="text-2xl font-bold mb-4">Commandes</h2>
+      </div>
+
+      
     </div>
   );
 }
